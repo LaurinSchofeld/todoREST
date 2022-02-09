@@ -339,6 +339,9 @@
           "items": {
             "$ref": "#/definitions/Entry"
           }
+        },
+        "completed": {
+          "type": "boolean"
         }
       },
       "xml": {
@@ -353,6 +356,9 @@
         },
         "name": {
           "type": "string"
+        },
+        "completed": {
+          "type": "boolean"
         }
       },
       "xml": {
