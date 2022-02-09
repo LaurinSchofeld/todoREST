@@ -1,0 +1,383 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Dies ist ein einfacher ToDo-Server. Man kann über diese API alle CRUD Funktionen auf ToDo Listen und Benutzer anwenden.",
+    "version": "1.0.0",
+    "title": "ToDo-API",
+    "contact": {
+      "email": "laurin.schofeld.98@gmail.com"
+    }
+  },
+  "host": "127.0.0.1:8000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/list": {
+      "post": {
+        "tags": [
+          "Listen"
+        ],
+        "summary": "Fügt eine neue Todo-Liste hinzu.",
+        "description": "",
+        "operationId": "addList",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Listeninhalt",
+            "description": "Todo-Liste, welche hinzugefügt werden soll",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/List"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Liste erfolgreich angelegt."
+          },
+          "500": {
+            "description": "Serverseitiger Fehler"
+          }
+        }
+      }
+    },
+    "/list/{list_id}": {
+      "get": {
+        "tags": [
+          "Listen"
+        ],
+        "summary": "Liefert alle Einträge einer Liste zurück.",
+        "description": "",
+        "operationId": "getList",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "list_id",
+            "type": "string",
+            "description": "Die ID der Liste, dessen Einträge man bekommen möchte.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Anfrage Erfolgreich."
+          },
+          "404": {
+            "description": "Die Liste mit der angegebenen ID wurde nicht gefunden."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Listen"
+        ],
+        "summary": "Löscht eine Todo-Liste per ID.",
+        "description": "",
+        "operationId": "deleteList",
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "list_id",
+            "type": "string",
+            "description": "Die ID der Liste, welche gelöscht werden soll.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Liste erfolgreich gelöscht."
+          },
+          "404": {
+            "description": "Gewünschte Liste wurde nicht gefunden."
+          }
+        }
+      }
+    },
+    "/list/{list_id}/entry": {
+      "post": {
+        "tags": [
+          "Listen"
+        ],
+        "summary": "Fügt einer bestehenden Liste einen Eintrag hinzu.",
+        "description": "",
+        "operationId": "addEntry",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "list_id",
+            "type": "string",
+            "description": "Die ID der Liste, die man erweitern möchte.",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Eintragsdaten",
+            "description": "Die Daten des hinzuzufügenden Eintrages.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Entry"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Eintrag wurde der erfolgreich hinzugefügt"
+          },
+          "404": {
+            "description": "Die Liste mit der angegebenen ID wurde nicht gefunden."
+          }
+        }
+      }
+    },
+    "/list/{list_id}/entry/{entry_id}": {
+      "post": {
+        "tags": [
+          "Listen"
+        ],
+        "summary": "Ändert einen bestehenden Listeneintrag.",
+        "description": "",
+        "operationId": "updateEntry",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "list_id",
+            "type": "string",
+            "description": "Die ID der Liste, die man erweitern möchte.",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "entry_id",
+            "type": "string",
+            "description": "Die ID des Eintrages, den man erweitern möchte.",
+            "required": true
+          },
+          {
+            "in": "body",
+            "name": "Eintragsdaten",
+            "description": "Die neuen Daten für den Eintrag.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Entry"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Eintrag wurde der erfolgreich geändert"
+          },
+          "404": {
+            "description": "Die Liste oder der Eintrag mit der angegebenen ID wurde nicht gefunden."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Listen"
+        ],
+        "summary": "Löscht einen Todo-Listeneintrag per ID.",
+        "description": "",
+        "operationId": "deleteEntry",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "list_id",
+            "type": "string",
+            "description": "Die ID der Liste, welche gelöscht werden soll.",
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "entry_id",
+            "type": "string",
+            "description": "Die ID der Liste, welche gelöscht werden soll.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Eintrag erfolgreich gelöscht."
+          },
+          "404": {
+            "description": "Eintrag oder Liste konnte nicht gefunden wurde."
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "tags": [
+          "Benutzer"
+        ],
+        "summary": "Liefert alle Benutzer zurück.",
+        "description": "",
+        "operationId": "getUsers",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Anfrage Erfolgreich."
+          },
+          "500": {
+            "description": "Interner Server-Fehler"
+          }
+        }
+      }
+    },
+    "/user/": {
+      "post": {
+        "tags": [
+          "Benutzer"
+        ],
+        "summary": "Fügt einen neuen Benutzer hinzu.",
+        "description": "",
+        "operationId": "addUser",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "Benutzerdaten",
+            "description": "Daten des neuen Benutzers.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Benutzer erfolgreich hinzugefügt."
+          },
+          "404": {
+            "description": "Benutzer konnte nicht hinzu gefügt werden."
+          }
+        }
+      }
+    },
+    "/user/{user_id}": {
+      "delete": {
+        "tags": [
+          "Benutzer"
+        ],
+        "summary": "Löscht einen Benutzer per ID.",
+        "description": "",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "type": "string",
+            "description": "Die ID des Benutzers, welcher gelöscht werden soll.",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Benutzer erfolgreich gelöscht."
+          },
+          "404": {
+            "description": "Benutzer konnte nicht gelöscht werden."
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "List": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "Entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Entry"
+          }
+        }
+      },
+      "xml": {
+        "name": "List"
+      }
+    },
+    "Entry": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "Entry"
+      }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "User"
+      }
+    }
+  }
+}
