@@ -357,8 +357,14 @@
         "name": {
           "type": "string"
         },
-        "completed": {
-          "type": "boolean"
+        "user_id": {
+          "type": "string"
+        },
+        "list_id": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
         }
       },
       "xml": {
@@ -371,13 +377,7 @@
         "id": {
           "type": "string"
         },
-        "firstName": {
-          "type": "string"
-        },
-        "lastName": {
-          "type": "string"
-        },
-        "password": {
+        "username": {
           "type": "string"
         }
       },
