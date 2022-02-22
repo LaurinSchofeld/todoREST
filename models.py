@@ -1,18 +1,15 @@
-"""
-    Contains the defintions of our data models/classes
-"""
-import uuid, json
+import uuid
 
 class List:
-    def __init__(self, name: str, entries=list()):
+    def __init__(self, name: str, entries=None):
         self.name = name
-        self.entries = entries
+        self.entries = entries or dict()
         self.id = str(uuid.uuid4())
         
     @staticmethod
     def can_create_from(todo_list_dict: dict) -> bool:
         """
-        returns a boolean value to indicate whether the given dict can be turned into a valid (todo)List object
+        Gibt einen bool Wert zurück, der aussagt, ob man aus dem angegebenen Dictionary ein Objekt vom Typ List erstellen kann
         """
         if not todo_list_dict.get("name"):
             return False
@@ -24,7 +21,7 @@ class List:
         
     def to_dict(self) -> dict:
         """
-        creates a dictionary from a (todo)List object
+        Gibt ein Dictionary zurück, welches die aktuelle Instanz des List Objektes darstellt
         """
         todo_list_dict = dict()
         todo_list_dict["name"] = self.name
@@ -34,23 +31,23 @@ class List:
     
         
 class User:
-    def __init__(self, user_name: str):
-        self.user_name = user_name
+    def __init__(self, username: str):
+        self.username = username
         self.id = str(uuid.uuid4())
         
        
 class Entry:
-    def __init__(self, name: str, list_id: str, user_id: str, description = None):
+    def __init__(self, name: str, list_id: str, user_id: str, description=None):
         self.name = name
         self.id = str(uuid.uuid4())
         self.list_id = list_id
         self.user_id = user_id
-        self.description = description if description is not None else ""
+        self.description = description or ""
         
     @staticmethod
     def can_create_from(entry_dict: dict) -> bool:
         """
-        returns a boolean value to indicate whether the given dict can be turned into a valid Entry object
+        Gibt einen bool Wert zurück, der aussagt, ob man aus dem angegebenen Dictionary ein Objekt vom Typ Entry erstellen kann
         """
         if not entry_dict.get("name"):
             return False
@@ -62,6 +59,9 @@ class Entry:
     
     @staticmethod
     def create_from_dict(entry_dict: dict):
+        """
+        Erstellt einen neuen Listeneintrag anhand eines Dictionarys
+        """
         name = entry_dict.get("name")
         list_id = entry_dict.get("list_id")
         user_id = entry_dict.get("user_id")
