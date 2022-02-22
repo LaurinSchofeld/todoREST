@@ -1,29 +1,36 @@
-from flask import Flask, request, abort
-from models import List, Entry, User
-import json, controller
+from flask import Flask, request
+from controller import Controller
 
 app = Flask(__name__)
-
-lists = []
+controller = Controller()
 
 @app.route("/")
 def hello_world():
-    return "<h1>Dies ist die Todo-Listen API</h1>"
+    return "<h1 style='text-align:center; font-size: 4em'>Dies ist die <a href='https://github.com/LaurinSchofeld/todoREST' target='_blank'>Todo-Listen API</a></h1>"
 
-@app.route('/list/', methods=['POST'])
+@app.route("/list/<list_id>/", methods=["GET", "DELETE"])
+def get_delete_list(list_id):
+    validated_id = Controller.validate_uuid(list_id)
+    if request.method == "GET":
+        return controller.get_list_entries(validated_id)
+    elif request.method == "DELETE":
+        return controller.delete_list(validated_id)
+
+@app.route("/list/", methods=["POST"])
 def add_list():
-    request_data = request.get_json()
-    if request_data is None or not List.can_create_from(request_data):
-        return abort(500, "It seems the data in your request did not satisfy the requrements to create a new Todo List.")
-    else:
-        new_todo_list = List(request_data.get("name"), request_data.get("entries"))
-        lists.append(new_todo_list)
-        return json.dumps(new_todo_list.to_dict())
+    return controller.add_list(request)
     
-    return abort(500)
-    
+@app.route("/list/<list_id>/entry/", methods=["POST"])   
+def add_entry(list_id):
+    validated_id = Controller.validate_uuid(list_id)
+    return controller.add_entry(validated_id, request)
 
 
+#@app.route("", methods=[""])   
+#@app.route("", methods=[""])   
+#@app.route("", methods=[""])    
+    
 if __name__ == "__main__":
+    app.debug = True
     app.run(port=8000)
     

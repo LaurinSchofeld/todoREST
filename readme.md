@@ -1,1 +1,1 @@
-hm
+Eine einfache Todo-Listen Api zum hinzufügen, ändern, löschen und abrufen von Todo-Listen, Einträgen und Nutzern.

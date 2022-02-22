@@ -4,7 +4,7 @@
 import uuid, json
 
 class List:
-    def __init__(self, name: str, entries: list):
+    def __init__(self, name: str, entries=list()):
         self.name = name
         self.entries = entries
         self.id = str(uuid.uuid4())
@@ -16,14 +16,11 @@ class List:
         """
         if not todo_list_dict.get("name"):
             return False
-        elif not todo_list_dict.get("entries"):
-            return False
-        else:
+        elif todo_list_dict.get("entries") is not None:
             for entry in todo_list_dict.get("entries"):
                 if not Entry.can_create_from(entry):
                     return False
-        return True
-            
+        return True  
         
     def to_dict(self) -> dict:
         """
@@ -34,14 +31,14 @@ class List:
         todo_list_dict["entries"] = self.entries
         todo_list_dict["id"] = self.id
         return todo_list_dict
-        
+    
         
 class User:
     def __init__(self, user_name: str):
         self.user_name = user_name
         self.id = str(uuid.uuid4())
         
-        
+       
 class Entry:
     def __init__(self, name: str, list_id: str, user_id: str, description = None):
         self.name = name
@@ -62,3 +59,12 @@ class Entry:
         elif not entry_dict.get("user_id"):
             return False
         return True
+    
+    @staticmethod
+    def create_from_dict(entry_dict: dict):
+        name = entry_dict.get("name")
+        list_id = entry_dict.get("list_id")
+        user_id = entry_dict.get("user_id")
+        description = entry_dict.get("description")
+        return Entry(name, list_id, user_id, description)
+    
