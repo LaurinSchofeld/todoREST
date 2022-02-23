@@ -48,6 +48,9 @@ class Controller:
         """
         list_dict = self.get_request_data(request)
         if list_dict is not None and List.can_create_from(list_dict):
+            for entry in list_dict.get("entries"):
+                if not self.users.get(entry.get("user_id")):
+                    abort(500, "Es konnte keine neue Liste mit den angegebenen Daten angelegt werden. Einer oder mehrere Einträge beinhalte/n eine unbekannte user_id.")
             new_todo_list = List(list_dict.get("name"), list_dict.get("entries"))
             self.lists[new_todo_list.id] = new_todo_list
             return json.dumps(new_todo_list.to_dict())
@@ -115,7 +118,7 @@ class Controller:
                         new_user_id = Controller.validate_uuid(new_value)
                         if new_user_id != entry.user_id:
                             entry.user_id = new_user_id
-                return "Eintrag erfolgreich aktualisiert."
+                return "Eintrag erfolgreich aktualisiert.  Der Eintrag sieht jetzt wie folgt aus: " + json.dumps(entry.to_dict())
             else:
                 abort(404, f"Der Eintrag mit der id: {entry_id} konnte nicht gefunden werden.")
         else:
