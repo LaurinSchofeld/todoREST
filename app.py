@@ -18,6 +18,12 @@ def get_delete_list(list_id):
         return controller.delete_list(valid_id)
 
 
+# einfacher zu testen, wenn man mal die ids nicht mehr kennt
+@app.route("/lists/", methods=["GET"])
+def get_all_lists():
+    return controller.get_all_lists()
+    
+
 @app.route("/list/", methods=["POST"])
 def add_list():
     return controller.add_list(request)

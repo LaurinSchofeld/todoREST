@@ -35,6 +35,13 @@ class Controller:
             abort(500, "Die Daten konnten nicht aus dem request geparsed werden.")
             
             
+    def get_all_lists(self):
+        """
+        Gibt alle Todo-Listen zurück.
+        """
+        return json.dumps([td_list.to_dict() for td_list in self.lists.values()])
+              
+            
     def add_list(self, request):
         """
         Fügt eine neue Liste hinzu.
@@ -121,9 +128,9 @@ class Controller:
         """
         td_list = self.lists.get(list_id)
         if td_list:
-            entry = td_list.get(entry_id)
+            entry = td_list.entries.get(entry_id)
             if entry:
-                del td_list[entry_id]
+                del td_list.entries[entry_id]
                 return "Eintrag erfolgreich gelöscht."
             else:
                 abort(404, f"Der Eintrag mit der id: {entry_id} konnte nicht gefunden werden.")
