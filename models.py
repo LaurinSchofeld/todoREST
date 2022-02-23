@@ -25,7 +25,7 @@ class List:
         """
         todo_list_dict = dict()
         todo_list_dict["name"] = self.name
-        todo_list_dict["entries"] = self.entries
+        todo_list_dict["entries"] = list(self.entries.values()) # entries is a dict, we want to return a list
         todo_list_dict["id"] = self.id
         return todo_list_dict
     
