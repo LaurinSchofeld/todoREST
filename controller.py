@@ -53,7 +53,7 @@ class Controller:
         """
         td_list = self.lists.get(list_id)
         if td_list:
-            return json.dumps(td_list.entries)
+            return json.dumps(list(td_list.entries.values()))
         abort(404, f"Die Liste mit der id: {list_id} konnte nicht gefunden werden.")
         
         
@@ -73,16 +73,17 @@ class Controller:
         Fügt einer Liste einen neuen Eintrag hinzu.
         """
         entry_dict = self.get_request_data(request)
-        if entry_dict and Entry.can_create_from(entry_dict):
-            new_entry = Entry.create_from_dict(entry_dict)
-            td_list = self.lists.get(list_id)
-            if td_list:
-                td_list.entries[new_entry.id] = new_entry
-                return json.dumps(new_entry)
-            else:
-                abort(500, f"Die Liste mit der id: {list_id} konnte nicht gefunden werden.")
-        else:
-            abort(500, "Es konnte kein neuer Eintrag mit den angegebenen Daten angelegt werden.")
+        if entry_dict:
+            entry_dict["list_id"] = list_id
+            if Entry.can_create_from(entry_dict):
+                new_entry = Entry.create_from_dict(entry_dict)
+                td_list = self.lists.get(list_id)
+                if td_list:
+                    td_list.entries[new_entry.id] = new_entry
+                    return json.dumps(new_entry.to_dict())
+                else:
+                    abort(500, f"Die Liste mit der id: {list_id} konnte nicht gefunden werden.")
+        abort(500, "Es konnte kein neuer Eintrag mit den angegebenen Daten angelegt werden.")
             
             
     def update_entry(self, list_id, entry_id, request):

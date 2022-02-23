@@ -68,3 +68,15 @@ class Entry:
         description = entry_dict.get("description")
         return Entry(name, list_id, user_id, description)
     
+    def to_dict(self) -> dict:
+        """
+        Gibt ein Dictionary zurück, welches die aktuelle Instanz des List Objektes darstellt
+        """
+        entry_dict = dict()
+        entry_dict["name"] = self.name
+        entry_dict["id"] = self.id
+        entry_dict["list_id"] = self.list_id
+        entry_dict["user_id"] = self.user_id
+        entry_dict["description"] = self.description
+
+        return entry_dict
