@@ -147,6 +147,7 @@ class Controller:
             user_list.append({"username": user.username, "id": user.id})
         return json.dumps(user_list)
         
+        
     def add_user(self, request):
         """
         Fügt einen neuen Nutzer hinzu und gibt die Daten von diesem als json string zurück.
