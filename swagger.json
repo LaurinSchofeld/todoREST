@@ -14,7 +14,7 @@
     "http"
   ],
   "paths": {
-    "/list": {
+    "/list/": {
       "post": {
         "tags": [
           "Listen"
@@ -279,10 +279,14 @@
           {
             "in": "body",
             "name": "Benutzerdaten",
-            "description": "Daten des neuen Benutzers.",
+            "description": "Username des neuen Benutzers.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/User"
+              "properties": {
+                "username": {
+                  "type": "string"
+                }
+              }
             }
           }
         ],
@@ -328,13 +332,10 @@
     "List": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string"
-        },
         "name": {
           "type": "string"
         },
-        "Entries": {
+        "entries": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/Entry"
@@ -351,9 +352,6 @@
     "Entry": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string"
-        },
         "name": {
           "type": "string"
         },
@@ -369,20 +367,6 @@
       },
       "xml": {
         "name": "Entry"
-      }
-    },
-    "User": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "string"
-        },
-        "username": {
-          "type": "string"
-        }
-      },
-      "xml": {
-        "name": "User"
       }
     }
   }

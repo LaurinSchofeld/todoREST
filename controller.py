@@ -14,6 +14,7 @@ class Controller:
         Versucht aus dem uuid string eine uuid zu erstellen und gibt entweder den id string zurück oder bricht den request mit Fehlercode ab.
         """
         try:
+            # erstellt eine uuid vom angegebenen string oder ValueError
             valid_id = uuid.UUID(id_to_validate, version=4)
             valid_id = str(valid_id)
             return valid_id
@@ -33,12 +34,13 @@ class Controller:
         except Exception as e:
             print(str(e))
             abort(500, "Die Daten konnten nicht aus dem request geparsed werden.")
-            
-            
+        
+                    
     def get_all_lists(self):
         """
         Gibt alle Todo-Listen zurück.
         """
+        # dict(dict()) in list(dict) umwandeln für json rückgabe {list_id: {list_dict}, ...} => [{list_dict}, ...]
         return json.dumps([td_list.to_dict() for td_list in self.lists.values()])
               
             
@@ -48,7 +50,8 @@ class Controller:
         """
         list_dict = self.get_request_data(request)
         if list_dict is not None and List.can_create_from(list_dict):
-            for entry in list_dict.get("entries"):
+            list_entries = list_dict.get("entries") or []
+            for entry in list_entries:
                 if not self.users.get(entry.get("user_id")):
                     abort(500, "Es konnte keine neue Liste mit den angegebenen Daten angelegt werden. Einer oder mehrere Einträge beinhalte/n eine unbekannte user_id.")
             new_todo_list = List(list_dict.get("name"), list_dict.get("entries"))
@@ -105,6 +108,7 @@ class Controller:
         if td_list:
             entry = td_list.entries.get(entry_id)
             if entry:
+                # eingegebene daten durchsuchen und neue einträge aktualisieren
                 for key, new_value in update_data.items():
                     if key == "name":
                         entry.name = new_value

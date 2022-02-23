@@ -6,6 +6,7 @@ class List:
         self.entries = dict()
         self.id = str(uuid.uuid4())
         if entries:
+            # entries wird als array eingegeben, ist intern aber ein dictionary
             for entry in entries:
                 # Beim anlegen einer Liste bekommt jeder Eintrag die ID der Liste.
                 if "list_id" in entry.keys():
@@ -35,7 +36,8 @@ class List:
         """
         todo_list_dict = dict()
         todo_list_dict["name"] = self.name
-        todo_list_dict["entries"] = [entry.to_dict() for entry in self.entries.values()] # entries is a dict, we want to return a list
+        # entries ist ein dictionary, wollen es als list zurückgeben
+        todo_list_dict["entries"] = [entry.to_dict() for entry in self.entries.values()] 
         todo_list_dict["id"] = self.id
         return todo_list_dict
     
@@ -61,6 +63,8 @@ class Entry:
         """
         field_names = ["name", "list_id", "user_id"]
         for field_name in field_names:
+            # ignore_field wird verwendet, damit man auch beim anlegen einer neuen liste einträge hinterlegen kann, obwohl diese noch keine list_id haben
+            # dict.get(schlüssel) gibt den wert mit dem gesuchten schlüssel oder None zurück
             if not entry_dict.get(field_name) and not ignore_field == field_name:
                 return False
         return True

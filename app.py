@@ -4,6 +4,14 @@ from controller import Controller
 app = Flask(__name__)
 controller = Controller()
 
+@app.after_request
+def apply_cors_header(response):
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Methods'] = 'GET,POST,DELETE'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response
+
+
 @app.route("/")
 def hello_world():
     return "<h1 style='text-align:center; font-size: 4em'>Dies ist die <a href='https://github.com/LaurinSchofeld/todoREST' target='_blank'>Todo-Listen API</a></h1>"
