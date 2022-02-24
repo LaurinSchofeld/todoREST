@@ -368,6 +368,17 @@
       "xml": {
         "name": "Entry"
       }
+    },
+    "User": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
     }
   }
 }
