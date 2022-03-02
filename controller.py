@@ -124,7 +124,7 @@ class Controller:
                         new_user_id = Controller.validate_uuid(new_value)
                         if new_user_id != entry.user_id:
                             entry.user_id = new_user_id
-                return "Eintrag erfolgreich aktualisiert.  Der Eintrag sieht jetzt wie folgt aus: " + json.dumps(entry.to_dict())
+                return json.dumps(entry.to_dict())
             else:
                 abort(404, f"Der Eintrag mit der id: {entry_id} konnte nicht gefunden werden.")
         else:

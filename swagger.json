@@ -14,6 +14,32 @@
     "http"
   ],
   "paths": {
+    "/lists/": {
+      "get": {
+        "tags": [
+          "Listen"
+        ],
+        "summary": "Gibt alle Listen zurück.",
+        "operationId": "getAllLists",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Listen erfolgreich abgefragt.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/List"
+              }
+            }
+          },
+          "500": {
+            "description": "Abfrage nicht erfolgreich."
+          }
+        }
+      }
+    },
     "/list/": {
       "post": {
         "tags": [
@@ -41,7 +67,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Liste erfolgreich angelegt."
+            "description": "Liste erfolgreich angelegt.",
+            "schema": {
+              "$ref": "#/definitions/List"
+            }
           },
           "500": {
             "description": "Serverseitiger Fehler"
@@ -74,7 +103,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Anfrage Erfolgreich."
+            "description": "Anfrage Erfolgreich.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Entry"
+              }
+            }
           },
           "404": {
             "description": "Die Liste mit der angegebenen ID wurde nicht gefunden."
@@ -145,7 +180,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Eintrag wurde der erfolgreich hinzugefügt"
+            "description": "Eintrag wurde der erfolgreich hinzugefügt",
+            "schema": {
+              "$ref": "#/definitions/Entry"
+            }
           },
           "404": {
             "description": "Die Liste mit der angegebenen ID wurde nicht gefunden."
@@ -194,7 +232,10 @@
         ],
         "responses": {
           "200": {
-            "description": "Eintrag wurde der erfolgreich geändert"
+            "description": "Eintrag wurde der erfolgreich geändert",
+            "schema": {
+              "$ref": "#/definitions/Entry"
+            }
           },
           "404": {
             "description": "Die Liste oder der Eintrag mit der angegebenen ID wurde nicht gefunden."
@@ -253,7 +294,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Anfrage Erfolgreich."
+            "description": "Anfrage Erfolgreich.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
           },
           "500": {
             "description": "Interner Server-Fehler"
@@ -282,18 +329,16 @@
             "description": "Username des neuen Benutzers.",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/User",
-              "properties": {
-                "username": {
-                  "type": "string"
-                }
-              }
+              "$ref": "#/definitions/User"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Benutzer erfolgreich hinzugefügt."
+            "description": "Benutzer erfolgreich hinzugefügt.",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           },
           "404": {
             "description": "Benutzer konnte nicht hinzu gefügt werden."
