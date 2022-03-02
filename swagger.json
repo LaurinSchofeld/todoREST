@@ -282,6 +282,7 @@
             "description": "Username des neuen Benutzers.",
             "required": true,
             "schema": {
+              "$ref": "#/definitions/User",
               "properties": {
                 "username": {
                   "type": "string"
@@ -332,6 +333,10 @@
     "List": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
         "name": {
           "type": "string"
         },
@@ -340,9 +345,6 @@
           "items": {
             "$ref": "#/definitions/Entry"
           }
-        },
-        "completed": {
-          "type": "boolean"
         }
       },
       "xml": {
@@ -352,6 +354,10 @@
     "Entry": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "readOnly": true
+        },
         "name": {
           "type": "string"
         },
@@ -372,10 +378,11 @@
     "User": {
       "type": "object",
       "properties": {
-        "username": {
-          "type": "string"
-        },
         "id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "username": {
           "type": "string"
         }
       }
