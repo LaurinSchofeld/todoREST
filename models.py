@@ -36,9 +36,9 @@ class List:
         """
         todo_list_dict = dict()
         todo_list_dict["name"] = self.name
+        todo_list_dict["id"] = self.id
         # entries ist ein dictionary, wollen es als list zurückgeben
         todo_list_dict["entries"] = [entry.to_dict() for entry in self.entries.values()] 
-        todo_list_dict["id"] = self.id
         return todo_list_dict
     
         

@@ -68,7 +68,7 @@ class Controller:
         """
         td_list = self.lists.get(list_id)
         if td_list:
-            return json.dumps(list(td_list.entries.values()))
+            return json.dumps([entry.to_dict() for entry in td_list.entries.values()])
         abort(404, f"Die Liste mit der id: {list_id} konnte nicht gefunden werden.")
         
         
