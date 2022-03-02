@@ -41,6 +41,7 @@ class Controller:
         Gibt alle Todo-Listen zurück.
         """
         # dict(dict()) in list(dict) umwandeln für json rückgabe {list_id: {list_dict}, ...} => [{list_dict}, ...]
+        # jede liste in ein dictionary umwandeln und diese in eine liste packen, das ganze als json string returnen
         return json.dumps([td_list.to_dict() for td_list in self.lists.values()])
               
             
@@ -49,6 +50,7 @@ class Controller:
         Fügt eine neue Liste hinzu.
         """
         list_dict = self.get_request_data(request)
+        # prüft, ob aus den gegebenen Daten ein List Objekt erstellt werden kann
         if list_dict is not None and List.can_create_from(list_dict):
             list_entries = list_dict.get("entries") or []
             for entry in list_entries:

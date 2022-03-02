@@ -114,7 +114,7 @@
     "/list/{list_id}/entry": {
       "post": {
         "tags": [
-          "Listen"
+          "Einträge"
         ],
         "summary": "Fügt einer bestehenden Liste einen Eintrag hinzu.",
         "description": "",
@@ -156,7 +156,7 @@
     "/list/{list_id}/entry/{entry_id}": {
       "post": {
         "tags": [
-          "Listen"
+          "Einträge"
         ],
         "summary": "Ändert einen bestehenden Listeneintrag.",
         "description": "",
@@ -203,7 +203,7 @@
       },
       "delete": {
         "tags": [
-          "Listen"
+          "Einträge"
         ],
         "summary": "Löscht einen Todo-Listeneintrag per ID.",
         "description": "",
