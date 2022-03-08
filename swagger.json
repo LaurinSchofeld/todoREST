@@ -146,7 +146,7 @@
         }
       }
     },
-    "/list/{list_id}/entry": {
+    "/list/{list_id}/entry/": {
       "post": {
         "tags": [
           "Einträge"
@@ -257,14 +257,14 @@
             "in": "path",
             "name": "list_id",
             "type": "string",
-            "description": "Die ID der Liste, welche gelöscht werden soll.",
+            "description": "Die ID der List, in welcher sich der Eintrag befindet.",
             "required": true
           },
           {
             "in": "path",
             "name": "entry_id",
             "type": "string",
-            "description": "Die ID der Liste, welche gelöscht werden soll.",
+            "description": "Die ID des zu löschenden Eintrages.",
             "required": true
           }
         ],
